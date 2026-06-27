@@ -53,6 +53,10 @@ persistence:
     accessModes:
       - ReadWriteOnce
     mountPath: /photoprism/originals
+    # storageClassName overrides the global persistence.storageClassName for this PVC only.
+    storageClassName: ""
+    # volumeName binds this PVC to a specific pre-existing PV by name (static provisioning).
+    volumeName: ""
     nfs:
       enabled: false
       server: ""
@@ -63,6 +67,10 @@ persistence:
     accessModes:
       - ReadWriteOnce
     mountPath: /photoprism/storage
+    # storageClassName overrides the global persistence.storageClassName for this PVC only.
+    storageClassName: ""
+    # volumeName binds this PVC to a specific pre-existing PV by name (static provisioning).
+    volumeName: ""
 
 service:
   enabled: true

@@ -11,7 +11,12 @@ spec:
   resources:
     requests:
       storage: {{ $orig.size }}
-{{- if .Values.persistence.storageClassName }}
+{{- if $orig.storageClassName }}
+  storageClassName: {{ $orig.storageClassName }}
+{{- else if .Values.persistence.storageClassName }}
   storageClassName: {{ .Values.persistence.storageClassName }}
+{{- end }}
+{{- if $orig.volumeName }}
+  volumeName: {{ $orig.volumeName }}
 {{- end }}
 {{- end }}

@@ -36,6 +36,22 @@ helm upgrade --install photos photoprism/photoprism-plus \
 - `persistence.originals` can be disabled or redirected to an NFS export when you manage originals elsewhere.
 - Backup options (`PHOTOPRISM_BACKUP_*`) are exposed so you can point scheduled backups to another path or tweak retention.
 
+### Static PV Binding
+
+To bind a PVC to a specific pre-existing PersistentVolume (e.g., an NFS-backed PV created outside the chart), set `volumeName` on the relevant section. Pair it with a matching `storageClassName` (use `""` for PVs that have no storage class):
+
+```yaml
+persistence:
+  originals:
+    volumeName: my-nfs-originals-pv
+    storageClassName: ""   # must match the PV's storageClassName
+  storage:
+    volumeName: my-nfs-storage-pv
+    storageClassName: ""
+```
+
+The per-PVC `storageClassName` takes precedence over the global `persistence.storageClassName`. When `volumeName` is set, Kubernetes binds the PVC directly to that PV, bypassing dynamic provisioning.
+
 ## Customization
 
 Key values you might want to adjust:
